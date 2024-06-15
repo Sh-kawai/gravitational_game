@@ -25,15 +25,18 @@
 1. GitHub リポジトリをクローンします:
 
 ```bash
-git clone https://github.com/yourusername/gravitational-game.git
+git clone https://github.com/Sh-kawai/gravitational_game.git
+```
 
 2. プロジェクトのディレクトリに移動します:
 ```bash
 cd gravitational-game
+```
 
 3. 以下のコマンドを実行してゲームを起動します:
 ```bash
 python main.py
+```
 
 ## ファイル構成:
 constants.py: ゲームで使用する定数が定義されたファイルです。
