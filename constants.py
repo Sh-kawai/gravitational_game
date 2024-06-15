@@ -10,7 +10,7 @@ TRAIL_LENGTH = 50  # 残像の長さ
 A_RADIUS = 10  # 質点Aの半径
 B_RADIUS = 5   # 質点Bの半径
 A_MASS = 80
-B_MASS = 5
+B_MASS = 10
 
 # 色の定義
 BACKGROUND_COLOR = (0, 0, 0)

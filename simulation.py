@@ -95,7 +95,7 @@ class Simulation:
         if not self.game_over:
             self.elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000
 
-            if self.elapsed_time >= self.game_time:
+            if self.elapsed_time >= self.game_time or not self.particles_b:
                 self.game_over = True
 
             for particle_a in self.particles_a:
