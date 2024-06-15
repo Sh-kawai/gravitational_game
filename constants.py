@@ -2,7 +2,7 @@
 WIDTH, HEIGHT = 1280, 720
 G = 10  # 万有引力定数
 FPS = 60  # フレームレート
-GAME_TIME = 5  # ゲーム時間（秒）
+GAME_TIME = 60  # ゲーム時間（秒）
 CONSUME_DISTANCE = 15  # 質点Aに飲み込まれる距離
 DAMPING_FACTOR = 0.95  # 減衰係数
 DAMP_MIN_SPEED = 2 # 減速する最小速度
