@@ -1,3 +1,2 @@
-*.pyc
-__pycache__/
-.gitignore
+gravitational_game/*.pyc
+gravitational_game/__pycache__/
