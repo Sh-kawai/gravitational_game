@@ -1,3 +1,2 @@
-*.pyc       # Python バイトコードファイル
 __pycache__/    # Python キャッシュディレクトリ
 .gitignore
