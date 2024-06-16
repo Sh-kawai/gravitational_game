@@ -1,5 +1,6 @@
 import pygame
 from simulation import Simulation
+from settings import Setting
 from constants import WIDTH, HEIGHT, BACKGROUND_COLOR, POINT_A_COLOR, WHITE, FPS
 
 def main():
@@ -15,9 +16,15 @@ def main():
     restart_button_font = pygame.font.Font(None, 64)
     restart_button_text = restart_button_font.render("RESTART", True, WHITE)
     restart_button_rect = restart_button_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    
+    setting_button_font = pygame.font.Font(None, 64)
+    setting_button_text = setting_button_font.render("SETTING", True, WHITE)
+    setting_button_rect = setting_button_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 100))
+    setting = Setting()
 
     running = True
     game_started = False
+    setting_flag = False
     sim = None
     while running:
         for event in pygame.event.get():
@@ -28,19 +35,25 @@ def main():
                     game_started = True
                     sim = Simulation(1, 100)
                     sim.start_time = pygame.time.get_ticks()
+                elif setting_button_rect.collidepoint(event.pos):
+                    setting_flag = not setting_flag
             elif event.type == pygame.MOUSEBUTTONDOWN and game_started and sim.game_over:
                 if restart_button_rect.collidepoint(event.pos):
-                    game_started = True
-                    sim = Simulation(1, 100)
-                    sim.start_time = pygame.time.get_ticks()
+                    game_started = False
 
         if sim:
             sim.update()
 
         screen.fill(BACKGROUND_COLOR)
         if not game_started:
-            pygame.draw.rect(screen, POINT_A_COLOR, start_button_rect)
-            screen.blit(start_button_text, start_button_rect.topleft)
+            pygame.draw.rect(screen, POINT_A_COLOR, setting_button_rect)
+            screen.blit(setting_button_text, setting_button_rect.topleft)
+            if setting_flag:
+                setting.update()
+                setting.draw(screen)
+            else:
+                pygame.draw.rect(screen, POINT_A_COLOR, start_button_rect)
+                screen.blit(start_button_text, start_button_rect.topleft)
         else:
             sim.draw(screen)
             if sim.game_over:
