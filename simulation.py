@@ -2,6 +2,7 @@ import pygame
 import random
 import math
 from constants import *
+from fireworks import Firework
 
 class ParticleA:
     def __init__(self, x, y, mass=A_MASS):
@@ -38,10 +39,14 @@ class ParticleB:
         self.x += self.vx
         self.y += self.vy
         
-        if self.x <= 0 or self.x >= WIDTH:
-            self.vx = -self.vx
-        if self.y <= 0 or self.y >= HEIGHT:
-            self.vy = -self.vy
+        if self.x <= 0:
+            self.vx = abs(self.vx)
+        elif self.x >= WIDTH:
+            self.vx = -abs(self.vx)
+        if self.y <= 0:
+            self.vy = abs(self.vy)
+        elif self.y >= HEIGHT:
+            self.vy = -abs(self.vy)
 
         # 軌跡の更新
         self.trail.append((self.x, self.y))
@@ -63,6 +68,7 @@ class Simulation:
     def __init__(self, num_particles_a, num_particles_b, game_time=GAME_TIME, a_mass=A_MASS, damping_factor=DAMPING_FACTOR):
         self.particles_a = []
         self.particles_b = []
+        self.fireworks = []
         self.num_particles_b = num_particles_b
         self.score = 0
         self.game_over = False
@@ -112,6 +118,7 @@ class Simulation:
                         particle_a.mass += particle_b.mass  # 質点Aの質量を増加
                         self.particles_b.remove(particle_b)
                         self.score += 1  # スコアを増やす
+                        self.fireworks.append(Firework(particle_b.x, particle_b.y))  # 花火を追加
                         break
                     else:
                         if distance > 0:
@@ -120,8 +127,14 @@ class Simulation:
                             ay += force * dy / distance / particle_b.mass
 
                 particle_b.update(ax, ay)
+            
+            for firework in self.fireworks:
+                firework.update()
+            self.fireworks = [f for f in self.fireworks if len(f.particles) > 0]
 
     def draw(self, screen):
+        for firework in self.fireworks:
+            firework.draw(screen)
         for particle_a in self.particles_a:
             particle_a.draw(screen)
         for particle_b in self.particles_b:
